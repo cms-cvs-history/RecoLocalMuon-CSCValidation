@@ -1,22 +1,13 @@
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("TEST")
-process.load("Geometry.MuonCommonData.muonIdealGeometryXML_cfi")
 
-process.load("Geometry.CSCGeometry.cscGeometry_cfi")
-
-process.load("CalibMuon.Configuration.CSC_FakeDBConditions_cff")
-
-process.load("EventFilter.CSCRawToDigi.cscSQLiteCablingUnpck_cff")
-
-process.load("EventFilter.CSCRawToDigi.cscUnpacker_cfi")
-
-process.load("RecoLocalMuon.CSCRecHitD.cscRecHitD_cfi")
-
-process.load("RecoLocalMuon.CSCSegment.cscSegments_cfi")
-
-process.MuonNumberingInitialization = cms.ESProducer("MuonNumberingInitialization")
-
+process.load("Configuration/StandardSequences/Geometry_cff")
+process.load("Configuration/StandardSequences/MagneticField_cff")
+process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
+process.load("Configuration/StandardSequences/RawToDigi_Data_cff")
+process.muonCSCDigis.UseExaminer = True
+process.load("Configuration.StandardSequences.Reconstruction_cff")
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
 )
@@ -60,7 +51,7 @@ process.source = cms.Source("DaqSource",
         RUI34 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI34_Monitor_000.raw'),
         RUI35 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI35_Monitor_000.raw'),
         RUI36 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI36_Monitor_000.raw'),
-        FED750 = cms.untracked.vstring('RUI00',
+        FED750 = cms.untracked.vstring(
             'RUI01',
             'RUI02',
             'RUI03',
@@ -96,7 +87,8 @@ process.source = cms.Source("DaqSource",
             'RUI33',
             'RUI34',
             'RUI35',
-            'RUI36')
+            'RUI36'
+        )
     )
 )
 

@@ -1,31 +1,26 @@
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("TEST")
-process.load("Geometry.MuonCommonData.muonIdealGeometryXML_cfi")
 
-process.load("Geometry.CSCGeometry.cscGeometry_cfi")
+process.load("Configuration/StandardSequences/Geometry_cff")
+process.load("Configuration/StandardSequences/MagneticField_cff")
+process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
+process.load("Configuration/StandardSequences/RawToDigi_Data_cff")
+process.muonCSCDigis.UseExaminer = True
+process.load("Configuration.StandardSequences.Reconstruction_cff")
 
-process.load("CalibMuon.Configuration.CSC_FakeDBConditions_cff")
-
-process.load("EventFilter.CSCRawToDigi.cscFrontierCablingUnpck_cff")
-
-process.load("EventFilter.CSCRawToDigi.cscUnpacker_cfi")
-
-process.load("RecoLocalMuon.CSCRecHitD.cscRecHitD_cfi")
-
-process.load("RecoLocalMuon.CSCSegment.cscSegments_cfi")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/uscms_data/d1/akub19/valData/MTCC/CSCValidation_mtcc_run4318.0.root',
-        'file:/uscms_data/d1/akub19/valData/MTCC/CSCValidation_mtcc_run4318.1.root',
-        'file:/uscms_data/d1/akub19/valData/MTCC/CSCValidation_mtcc_run4318.2.root',
-        'file:/uscms_data/d1/akub19/valData/MTCC/CSCValidation_mtcc_run4318.3.root')
+    fileNames = cms.untracked.vstring(
+        '/store/data/CRUZET3/EndcapsMuon/RAW/v4/000/051/285/0211AB52-4255-DD11-98AB-001617DC1F70.root',
+        '/store/data/CRUZET3/EndcapsMuon/RAW/v4/000/051/285/749F97C6-FA54-DD11-8277-001617C3B710.root',
+        '/store/data/CRUZET3/EndcapsMuon/RAW/v4/000/051/285/D25CA102-FE54-DD11-82FB-000423D6CA72.root'
+)
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100000)
+    input = cms.untracked.int32(10000)
 )
-process.MuonNumberingInitialization = cms.ESProducer("MuonNumberingInitialization")
 
 process.cscValidation = cms.EDFilter("CSCValidation",
     rootFileName = cms.untracked.string('validationHists.root'),
