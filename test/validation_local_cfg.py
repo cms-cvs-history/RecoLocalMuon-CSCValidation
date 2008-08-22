@@ -6,12 +6,19 @@ process.load("Configuration/StandardSequences/Geometry_cff")
 process.load("Configuration/StandardSequences/MagneticField_cff")
 process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
 process.load("Configuration/StandardSequences/RawToDigi_Data_cff")
-process.muonCSCDigis.UseExaminer = True
 process.load("Configuration.StandardSequences.Reconstruction_cff")
+
+# specify the global tag to use..
+# more info and a list of current tags can be found at
+# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
+process.GlobalTag.globaltag = 'STARTUP_V6::All'
+
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
 )
 
+# this is just an example.  Local data must be copied locally and the paths below
+# replaced with wherever you put the files
 process.source = cms.Source("DaqSource",
     readerPluginName = cms.untracked.string('CSCFileReader'),
     readerPset = cms.untracked.PSet(
@@ -91,6 +98,10 @@ process.source = cms.Source("DaqSource",
         )
     )
 )
+
+# if you want the pretty 2D scatter plots of rechit and segment
+# global positions, writeTreeToFile must be set to True, but be careful
+# as this will significantly increase the size of the output root file
 
 process.cscValidation = cms.EDFilter("CSCValidation",
     rootFileName = cms.untracked.string('validationHists.root'),
