@@ -9,7 +9,7 @@ process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
 # specify the global tag to use..
 # more info and a list of current tags can be found at
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
-process.GlobalTag.globaltag = 'IDEAL_V6::All'
+process.GlobalTag.globaltag = 'STARTUP_V7::All'
 
 
 # points to CMSSW_2_1_2 single muon (Pt = 100) relval sample.  Sim data must contain
@@ -24,20 +24,38 @@ process.source = cms.Source("PoolSource",
 )
 )
 
+# recommend at least 10k events (single Muon Simulation)
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(10000)
 )
 
-# if you want the pretty 2D scatter plots of rechit and segment
-# global positions, writeTreeToFile must be set to True, but be careful
-# as this will significantly increase the size of the output root file
+# This is the CSCValidation package minimum block.  There are more input variables which
+# can be set.  Check src/CSCValidation.cc to see what they are.
 process.cscValidation = cms.EDFilter("CSCValidation",
+    # name of file which will contain output
     rootFileName = cms.untracked.string('validationHists.root'),
+    # basically turns on/off residual plots which use simhits
     isSimulation = cms.untracked.bool(True),
+    # stores a tree of info for the first 1.5M rechits and 2M segments
+    # used to make 2D scatter plots of global positions.  Significantly increases
+    # size of output root file, so beware...
     writeTreeToFile = cms.untracked.bool(True),
-    makePlots = cms.untracked.bool(False)
+    # mostly for MC and RECO files which may have dropped the digis
+    useDigis = cms.untracked.bool(True),
+    # lots of extra, more detailed plots
+    detailedAnalysis = cms.untracked.bool(False),
+    # Input tags for various collections CSCValidation looks at
+    stripDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCStripDigi"),
+    wireDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi"),
+    compDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi"),
+    cscRecHitTag = cms.InputTag("csc2DRecHits"),
+    cscSegTag = cms.InputTag("cscSegments"),
+    # trigger and stdalone muons to be implemented soon...
+    saMuonTag = cms.InputTag("cosmicMuonsEndCapsOnly"),
+    l1aTag = cms.InputTag("gtDigis"),
+    simHitTag = cms.InputTag("g4SimHits", "MuonCSCHits")
 )
-
 
 process.p = cms.Path(process.cscValidation)
+#process.p = cms.Path(process.muonCSCDigis*process.csc2DRecHits*process.cscSegments*process.cscValidation)
 

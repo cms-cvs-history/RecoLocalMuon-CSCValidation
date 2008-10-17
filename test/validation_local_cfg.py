@@ -11,10 +11,11 @@ process.load("Configuration.StandardSequences.Reconstruction_cff")
 # specify the global tag to use..
 # more info and a list of current tags can be found at
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
-process.GlobalTag.globaltag = 'STARTUP_V6::All'
+process.GlobalTag.globaltag = 'CRUZET4_V5P::All'
 
+# Recommend around 50k events for local CSC Runing
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(50000)
 )
 
 # this is just an example.  Local data must be copied locally and the paths below
@@ -22,42 +23,42 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source("DaqSource",
     readerPluginName = cms.untracked.string('CSCFileReader'),
     readerPset = cms.untracked.PSet(
-        RUI01 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI01_Monitor_000.raw'),
-        RUI02 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI02_Monitor_000.raw'),
-        RUI03 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI03_Monitor_000.raw'),
-        RUI04 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI04_Monitor_000.raw'),
-        RUI05 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI05_Monitor_000.raw'),
-        RUI06 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI06_Monitor_000.raw'),
-        RUI07 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI07_Monitor_000.raw'),
-        RUI08 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI08_Monitor_000.raw'),
-        RUI09 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI09_Monitor_000.raw'),
-        RUI10 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI10_Monitor_000.raw'),
-        RUI11 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI11_Monitor_000.raw'),
-        RUI12 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI12_Monitor_000.raw'),
-        RUI13 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI13_Monitor_000.raw'),
-        RUI14 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI14_Monitor_000.raw'),
-        RUI15 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI15_Monitor_000.raw'),
-        RUI16 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI16_Monitor_000.raw'),
-        RUI17 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI17_Monitor_000.raw'),
-        RUI18 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI18_Monitor_000.raw'),
-        RUI19 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI19_Monitor_000.raw'),
-        RUI20 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI20_Monitor_000.raw'),
-        RUI21 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI21_Monitor_000.raw'),
-        RUI22 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI22_Monitor_000.raw'),
-        RUI23 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI23_Monitor_000.raw'),
-        RUI24 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI24_Monitor_000.raw'),
-        RUI25 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI25_Monitor_000.raw'),
-        RUI26 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI26_Monitor_000.raw'),
-        RUI27 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI27_Monitor_000.raw'),
-        RUI28 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI28_Monitor_000.raw'),
-        RUI29 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI29_Monitor_000.raw'),
-        RUI30 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI30_Monitor_000.raw'),
-        RUI31 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI31_Monitor_000.raw'),
-        RUI32 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI32_Monitor_000.raw'),
-        RUI33 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI33_Monitor_000.raw'),
-        RUI34 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI34_Monitor_000.raw'),
-        RUI35 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI35_Monitor_000.raw'),
-        RUI36 = cms.untracked.vstring('/uscms_data/d1/akub19/run39098/csc_00039098_EmuRUI36_Monitor_000.raw'),
+        RUI01 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI01_Monitor_000.raw'),
+        RUI02 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI02_Monitor_000.raw'),
+        RUI03 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI03_Monitor_000.raw'),
+        RUI04 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI04_Monitor_000.raw'),
+        RUI05 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI05_Monitor_000.raw'),
+        RUI06 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI06_Monitor_000.raw'),
+        RUI07 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI07_Monitor_000.raw'),
+        RUI08 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI08_Monitor_000.raw'),
+        RUI09 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI09_Monitor_000.raw'),
+        RUI10 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI10_Monitor_000.raw'),
+        RUI11 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI11_Monitor_000.raw'),
+        RUI12 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI12_Monitor_000.raw'),
+        RUI13 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI13_Monitor_000.raw'),
+        RUI14 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI14_Monitor_000.raw'),
+        RUI15 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI15_Monitor_000.raw'),
+        RUI16 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI16_Monitor_000.raw'),
+        RUI17 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI17_Monitor_000.raw'),
+        RUI18 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI18_Monitor_000.raw'),
+        RUI19 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI19_Monitor_000.raw'),
+        RUI20 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI20_Monitor_000.raw'),
+        RUI21 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI21_Monitor_000.raw'),
+        RUI22 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI22_Monitor_000.raw'),
+        RUI23 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI23_Monitor_000.raw'),
+        RUI24 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI24_Monitor_000.raw'),
+        RUI25 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI25_Monitor_000.raw'),
+        RUI26 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI26_Monitor_000.raw'),
+        RUI27 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI27_Monitor_000.raw'),
+        RUI28 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI28_Monitor_000.raw'),
+        RUI29 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI29_Monitor_000.raw'),
+        RUI30 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI30_Monitor_000.raw'),
+        RUI31 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI31_Monitor_000.raw'),
+        RUI32 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI32_Monitor_000.raw'),
+        RUI33 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI33_Monitor_000.raw'),
+        RUI34 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI34_Monitor_000.raw'),
+        RUI35 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI35_Monitor_000.raw'),
+        RUI36 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI36_Monitor_000.raw'),
         FED750 = cms.untracked.vstring(
             'RUI01',
             'RUI02',
@@ -99,16 +100,34 @@ process.source = cms.Source("DaqSource",
     )
 )
 
-# if you want the pretty 2D scatter plots of rechit and segment
-# global positions, writeTreeToFile must be set to True, but be careful
-# as this will significantly increase the size of the output root file
-
+# This is the CSCValidation package minimum block.  There are more input variables which
+# can be set.  Check src/CSCValidation.cc to see what they are.
 process.cscValidation = cms.EDFilter("CSCValidation",
+    # name of file which will contain output
     rootFileName = cms.untracked.string('validationHists.root'),
+    # basically turns on/off residual plots which use simhits
     isSimulation = cms.untracked.bool(False),
+    # stores a tree of info for the first 1.5M rechits and 2M segments
+    # used to make 2D scatter plots of global positions.  Significantly increases
+    # size of output root file, so beware...
     writeTreeToFile = cms.untracked.bool(True),
-    makePlots = cms.untracked.bool(False)
+    # mostly for MC and RECO files which may have dropped the digis
+    useDigis = cms.untracked.bool(True),
+    # lots of extra, more detailed plots
+    detailedAnalysis = cms.untracked.bool(False),
+    # Input tags for various collections CSCValidation looks at
+    stripDigiTag = cms.InputTag("muonCSCDigis","MuonCSCStripDigi"),
+    wireDigiTag = cms.InputTag("muonCSCDigis","MuonCSCWireDigi"),
+    compDigiTag = cms.InputTag("muonCSCDigis","MuonCSCComparatorDigi"),
+    cscRecHitTag = cms.InputTag("csc2DRecHits"),
+    cscSegTag = cms.InputTag("cscSegments"),
+    # trigger and stdalone muons to be implemented soon...
+    saMuonTag = cms.InputTag("cosmicMuonsEndCapsOnly"),
+    l1aTag = cms.InputTag("gtDigis"),
+    simHitTag = cms.InputTag("g4SimHits", "MuonCSCHits")
+
 )
 
+#process.p = cmsPath(process.cscValidation)
 process.p = cms.Path(process.muonCSCDigis*process.csc2DRecHits*process.cscSegments*process.cscValidation)
 
