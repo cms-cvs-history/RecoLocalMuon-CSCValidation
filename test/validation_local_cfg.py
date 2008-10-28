@@ -6,12 +6,15 @@ process.load("Configuration/StandardSequences/Geometry_cff")
 process.load("Configuration/StandardSequences/MagneticField_cff")
 process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
 process.load("Configuration/StandardSequences/RawToDigi_Data_cff")
-process.load("Configuration.StandardSequences.Reconstruction_cff")
+# for Beam
+#process.load("Configuration.StandardSequences.Reconstruction_cff")
+# for Cosmics
+process.load("Configuration.StandardSequences.ReconstructionCosmics_cff")
 
 # specify the global tag to use..
 # more info and a list of current tags can be found at
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
-process.GlobalTag.globaltag = 'CRUZET4_V5P::All'
+process.GlobalTag.globaltag = 'CRAFT_V3P::All'
 
 # Recommend around 50k events for local CSC Runing
 process.maxEvents = cms.untracked.PSet(
@@ -100,11 +103,9 @@ process.source = cms.Source("DaqSource",
     )
 )
 
-# This is the CSCValidation package minimum block.  There are more input variables which
-# can be set.  Check src/CSCValidation.cc to see what they are.
 process.cscValidation = cms.EDFilter("CSCValidation",
     # name of file which will contain output
-    rootFileName = cms.untracked.string('validationHists.root'),
+    rootFileName = cms.untracked.string('validationHists_local.root'),
     # basically turns on/off residual plots which use simhits
     isSimulation = cms.untracked.bool(False),
     # stores a tree of info for the first 1.5M rechits and 2M segments
@@ -121,13 +122,16 @@ process.cscValidation = cms.EDFilter("CSCValidation",
     compDigiTag = cms.InputTag("muonCSCDigis","MuonCSCComparatorDigi"),
     cscRecHitTag = cms.InputTag("csc2DRecHits"),
     cscSegTag = cms.InputTag("cscSegments"),
-    # trigger and stdalone muons to be implemented soon...
+    # do you want to look at trigger info?
+    makeTriggerPlots = cms.untracked.bool(False),
+    # do you want to look at STA muons?
+    makeStandalonePlots = cms.untracked.bool(False),
+    # STA tag for cosmics
     saMuonTag = cms.InputTag("cosmicMuonsEndCapsOnly"),
     l1aTag = cms.InputTag("gtDigis"),
     simHitTag = cms.InputTag("g4SimHits", "MuonCSCHits")
-
 )
 
-#process.p = cmsPath(process.cscValidation)
-process.p = cms.Path(process.muonCSCDigis*process.csc2DRecHits*process.cscSegments*process.cscValidation)
-
+# for RAW with just local level CSC Stuff
+process.p = cms.Path(process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
+                     process.cscValidation)

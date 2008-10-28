@@ -5,6 +5,7 @@ process = cms.Process("TEST")
 process.load("Configuration/StandardSequences/Geometry_cff")
 process.load("Configuration/StandardSequences/MagneticField_cff")
 process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
+process.load("Configuration.StandardSequences.Reconstruction_cff")
 
 # specify the global tag to use..
 # more info and a list of current tags can be found at
@@ -29,11 +30,9 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(10000)
 )
 
-# This is the CSCValidation package minimum block.  There are more input variables which
-# can be set.  Check src/CSCValidation.cc to see what they are.
 process.cscValidation = cms.EDFilter("CSCValidation",
     # name of file which will contain output
-    rootFileName = cms.untracked.string('validationHists.root'),
+    rootFileName = cms.untracked.string('validationHists_sim.root'),
     # basically turns on/off residual plots which use simhits
     isSimulation = cms.untracked.bool(True),
     # stores a tree of info for the first 1.5M rechits and 2M segments
@@ -45,17 +44,30 @@ process.cscValidation = cms.EDFilter("CSCValidation",
     # lots of extra, more detailed plots
     detailedAnalysis = cms.untracked.bool(False),
     # Input tags for various collections CSCValidation looks at
-    stripDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCStripDigi"),
-    wireDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi"),
-    compDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi"),
+    stripDigiTag = cms.InputTag("muonCSCDigis","MuonCSCStripDigi"),
+    wireDigiTag = cms.InputTag("muonCSCDigis","MuonCSCWireDigi"),
+    compDigiTag = cms.InputTag("muonCSCDigis","MuonCSCComparatorDigi"),
     cscRecHitTag = cms.InputTag("csc2DRecHits"),
     cscSegTag = cms.InputTag("cscSegments"),
-    # trigger and stdalone muons to be implemented soon...
+    # do you want to look at trigger info?
+    makeTriggerPlots = cms.untracked.bool(False),
+    # do you want to look at STA muons?
+    makeStandalonePlots = cms.untracked.bool(False),
+    # STA tag for cosmics
     saMuonTag = cms.InputTag("cosmicMuonsEndCapsOnly"),
     l1aTag = cms.InputTag("gtDigis"),
     simHitTag = cms.InputTag("g4SimHits", "MuonCSCHits")
 )
 
+# for RECO or SIM  (if digis were not saved, make sure to set useDigis = False)
 process.p = cms.Path(process.cscValidation)
-#process.p = cms.Path(process.muonCSCDigis*process.csc2DRecHits*process.cscSegments*process.cscValidation)
+# for RAW with just local level CSC Stuff
+#process.p = cms.Path(process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
+#                     process.cscValidation)
+# for RAW (Cosmics) if you want to look at Trigger and Standalone info
+#process.p = cms.Path(process.gtDigis *
+#                     process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
+#                     process.muonRPCDigis * process.rpcRecHits *
+#                     process.offlineBeamSpot * process.CosmicMuonSeedEndCapsOnly*process.cosmicMuonsEndCapsOnly *
+#                     process.cscValidation)
 
