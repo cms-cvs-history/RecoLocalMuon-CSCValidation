@@ -44,9 +44,9 @@ process.cscValidation = cms.EDFilter("CSCValidation",
     # lots of extra, more detailed plots
     detailedAnalysis = cms.untracked.bool(False),
     # Input tags for various collections CSCValidation looks at
-    stripDigiTag = cms.InputTag("muonCSCDigis","MuonCSCStripDigi"),
-    wireDigiTag = cms.InputTag("muonCSCDigis","MuonCSCWireDigi"),
-    compDigiTag = cms.InputTag("muonCSCDigis","MuonCSCComparatorDigi"),
+    stripDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCStripDigi"),
+    wireDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi"),
+    compDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi"),
     cscRecHitTag = cms.InputTag("csc2DRecHits"),
     cscSegTag = cms.InputTag("cscSegments"),
     # do you want to look at trigger info?
