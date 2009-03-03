@@ -7,21 +7,20 @@ process.load("Configuration/StandardSequences/MagneticField_cff")
 process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
 process.load("Configuration.StandardSequences.Reconstruction_cff")
 
+# this may be necessary if want to reconstruct rechits but get a 
+
 # specify the global tag to use..
 # more info and a list of current tags can be found at
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
-process.GlobalTag.globaltag = 'STARTUP_V7::All'
+process.GlobalTag.globaltag = 'IDEAL_30X::All'
 
 
-# points to CMSSW_2_1_2 single muon (Pt = 100) relval sample.  Sim data must contain
-# digis and RECO or else expect an error from CSCValidation.
-# Look for DIGI and RECO in the dataset name...
+# points to CMSSW_3_1_0_pre2 single muon (Pt = 100) relval sample.  Sim data must contain
 process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
-       '/store/relval/CMSSW_2_1_2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG-RECO/IDEAL_V6_10TeV_v1/0001/2CEA4EBD-CF6A-DD11-8D3F-000423D94C68.root',
-       '/store/relval/CMSSW_2_1_2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG-RECO/IDEAL_V6_10TeV_v1/0001/363D75C1-CF6A-DD11-805C-000423D99658.root',
-       '/store/relval/CMSSW_2_1_2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG-RECO/IDEAL_V6_10TeV_v1/0001/563315A7-E36A-DD11-B3AF-000423D94990.root',
-       '/store/relval/CMSSW_2_1_2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG-RECO/IDEAL_V6_10TeV_v1/0004/FAE42B0C-AD6B-DD11-A0CE-001617DBD556.root'
+        '/store/relval/CMSSW_3_1_0_pre2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG/IDEAL_30X_v1/0000/9C6DB92D-7203-DE11-9143-000423D98AF0.root',
+        '/store/relval/CMSSW_3_1_0_pre2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG/IDEAL_30X_v1/0000/C6419202-7103-DE11-A5AA-000423D94534.root',
+        '/store/relval/CMSSW_3_1_0_pre2/RelValSingleMuPt100/GEN-SIM-DIGI-RAW-HLTDEBUG/IDEAL_30X_v1/0001/F482F867-DB03-DE11-B212-000423D6CA72.root'
 )
 )
 
@@ -49,8 +48,10 @@ process.cscValidation = cms.EDFilter("CSCValidation",
     compDigiTag = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi"),
     cscRecHitTag = cms.InputTag("csc2DRecHits"),
     cscSegTag = cms.InputTag("cscSegments"),
-    # do you want to look at trigger info?
-    makeTriggerPlots = cms.untracked.bool(False),
+    # set to true to only look at events with CSC L1A
+    useTrigger = cms.untracked.bool(False),
+    # set to true to skip "messy" events
+    filterCSCEvents = cms.untracked.bool(False),
     # do you want to look at STA muons?
     makeStandalonePlots = cms.untracked.bool(False),
     # STA tag for cosmics
@@ -60,7 +61,7 @@ process.cscValidation = cms.EDFilter("CSCValidation",
 )
 
 # for RECO or SIM  (if digis were not saved, make sure to set useDigis = False)
-process.p = cms.Path(process.cscValidation)
+#process.p = cms.Path(process.cscValidation)
 # for RAW with just local level CSC Stuff
 #process.p = cms.Path(process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
 #                     process.cscValidation)

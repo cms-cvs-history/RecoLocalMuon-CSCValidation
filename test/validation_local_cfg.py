@@ -14,7 +14,7 @@ process.load("Configuration.StandardSequences.ReconstructionCosmics_cff")
 # specify the global tag to use..
 # more info and a list of current tags can be found at
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
-process.GlobalTag.globaltag = 'CRAFT_V3P::All'
+process.GlobalTag.globaltag = 'CRAFT_30X::All'
 
 # Recommend around 50k events for local CSC Runing
 process.maxEvents = cms.untracked.PSet(
@@ -62,43 +62,10 @@ process.source = cms.Source("DaqSource",
         RUI34 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI34_Monitor_000.raw'),
         RUI35 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI35_Monitor_000.raw'),
         RUI36 = cms.untracked.vstring('/tmp/akub19/csc_00064012_EmuRUI36_Monitor_000.raw'),
-        FED750 = cms.untracked.vstring(
-            'RUI01',
-            'RUI02',
-            'RUI03',
-            'RUI04',
-            'RUI05',
-            'RUI06',
-            'RUI07',
-            'RUI08',
-            'RUI09',
-            'RUI10',
-            'RUI11',
-            'RUI12',
-            'RUI13',
-            'RUI14',
-            'RUI15',
-            'RUI16',
-            'RUI17',
-            'RUI18',
-            'RUI19',
-            'RUI20',
-            'RUI21',
-            'RUI22',
-            'RUI23',
-            'RUI24',
-            'RUI25',
-            'RUI26',
-            'RUI27',
-            'RUI28',
-            'RUI29',
-            'RUI30',
-            'RUI31',
-            'RUI32',
-            'RUI33',
-            'RUI34',
-            'RUI35',
-            'RUI36'
+        FED750 = cms.untracked.vstring('RUI01','RUI02','RUI03','RUI04','RUI05','RUI06','RUI07',
+            'RUI08','RUI09','RUI10','RUI11','RUI12','RUI13','RUI14','RUI15','RUI16','RUI17',
+            'RUI18','RUI19','RUI20','RUI21','RUI22','RUI23','RUI24','RUI25','RUI26','RUI27',
+            'RUI28','RUI29','RUI30','RUI31','RUI32','RUI33','RUI34','RUI35','RUI36'
         )
     )
 )
@@ -122,8 +89,10 @@ process.cscValidation = cms.EDFilter("CSCValidation",
     compDigiTag = cms.InputTag("muonCSCDigis","MuonCSCComparatorDigi"),
     cscRecHitTag = cms.InputTag("csc2DRecHits"),
     cscSegTag = cms.InputTag("cscSegments"),
-    # do you want to look at trigger info?
-    makeTriggerPlots = cms.untracked.bool(False),
+    # set to true to only look at events with CSC L1A
+    useTrigger = cms.untracked.bool(False),
+    # set to true to skip "messy" events
+    filterCSCEvents = cms.untracked.bool(False),
     # do you want to look at STA muons?
     makeStandalonePlots = cms.untracked.bool(False),
     # STA tag for cosmics
