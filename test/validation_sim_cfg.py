@@ -6,8 +6,12 @@ process.load("Configuration/StandardSequences/Geometry_cff")
 process.load("Configuration/StandardSequences/MagneticField_cff")
 process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
 process.load("Configuration.StandardSequences.Reconstruction_cff")
+process.load("Configuration/StandardSequences/RawToDigi_cff")
 
 # this may be necessary if want to reconstruct rechits but get a 
+# "product not found" error about the digis when running on simulation
+#process.csc2DRecHits = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi")
+#process.csc2DRecHits = cms.InputTag("simMuonCSCDigis","MuonCSCStripDigi")
 
 # specify the global tag to use..
 # more info and a list of current tags can be found at
@@ -62,9 +66,9 @@ process.cscValidation = cms.EDFilter("CSCValidation",
 
 # for RECO or SIM  (if digis were not saved, make sure to set useDigis = False)
 #process.p = cms.Path(process.cscValidation)
-# for RAW with just local level CSC Stuff
-#process.p = cms.Path(process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
-#                     process.cscValidation)
+# for RAW with just local level CSC Stuff or SIM with RAW included
+process.p = cms.Path(process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
+                     process.cscValidation)
 # for RAW (Cosmics) if you want to look at Trigger and Standalone info
 #process.p = cms.Path(process.gtDigis *
 #                     process.muonCSCDigis * process.csc2DRecHits * process.cscSegments *
