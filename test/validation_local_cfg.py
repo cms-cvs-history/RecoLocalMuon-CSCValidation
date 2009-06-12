@@ -92,9 +92,9 @@ process.cscValidation = cms.EDFilter("CSCValidation",
     # lots of extra, more detailed plots
     detailedAnalysis = cms.untracked.bool(False),
     # set to true to only look at events with CSC L1A
-    useTriggerFilter = cms.untracked.bool(True),
+    useTriggerFilter = cms.untracked.bool(False),
     # set to true to only look at events with clean muon (based on STA muon)
-    useQualityFilter = cms.untracked.bool(True),
+    useQualityFilter = cms.untracked.bool(False),
     # Input tags for various collections CSCValidation looks at
     stripDigiTag = cms.InputTag("muonCSCDigis","MuonCSCStripDigi"),
     wireDigiTag = cms.InputTag("muonCSCDigis","MuonCSCWireDigi"),
